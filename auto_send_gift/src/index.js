@@ -46,7 +46,7 @@ async function sendGift(roomUid, giftName) {
     console.log('送礼成功', giftName)
     await sendMsg(giftName)
   } else {
-    console.log('送礼失败', giftName)
+    console.log('送礼失败', giftName, respData)
   }
 }
 
