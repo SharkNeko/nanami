@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "danmaku_watcher",
+      "script": "../danmaku_watcher/node_modules/.bin/ts-node",
+      "args": "../danmaku_watcher/src/index.ts",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS"
+    }
+  ]
+}

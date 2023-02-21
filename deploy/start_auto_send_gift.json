@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "auto_send_gift",
+      "script": "../auto_send_gift/src/index.js",
+      "node_args": "-r ../auto_send_gift/node_modules/dotenv/config",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "env": {
+        "DOTENV_CONFIG_PATH": "../auto_send_gift/.env"
+      }
+    }
+  ]
+}
