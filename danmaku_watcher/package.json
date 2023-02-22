@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "eventemitter3": "^5.0.0",
     "mongodb": "^5.0.1",
-    "tiny-bilibili-ws": "^0.0.7"
+    "tiny-bilibili-ws": "^0.0.7",
+    "typed-emitter": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "^18.14.0",

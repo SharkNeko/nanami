@@ -91,3 +91,5 @@ export type MSG_UNION =
   | ONLINE_RANK_TOP3_MSG
   | LIVE_INTERACTIVE_GAME_MSG
   | AREA_RANK_CHANGED_MSG
+
+  export type MSG_DATA = MSG_UNION['data']
