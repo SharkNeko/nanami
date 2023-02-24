@@ -10,16 +10,11 @@ export class DanmakuWatcher {
   mongoHelper: MongoHelper
   msgProcessor: MsgProcessor
   eventBus: TypedEmitter<MessageEvents>
-  // ROOM_ID = 13308358 // 甜药
-  // ROOM_ID = 21919321 // Hiiro
-  // ROOM_ID = 1017 // 散人
-  // ROOM_ID = 2347971 // My
-  ROOM_ID = 21452505 // 七海
-  constructor() {
+  constructor(public roomId: number) {
     this.eventBus = new EventEmitter() as TypedEmitter<MessageEvents>
     this.mongoHelper = new MongoHelper(this.getMongoDbUrl(), this.eventBus)
-    this.msgProcessor = new MsgProcessor(this.ROOM_ID, this.mongoHelper, this.eventBus)
-    this.connManager = new ConnManager(this.ROOM_ID, this.eventBus)
+    this.msgProcessor = new MsgProcessor(roomId, this.mongoHelper, this.eventBus)
+    this.connManager = new ConnManager(roomId, this.eventBus)
   }
 
   async startWatching() {

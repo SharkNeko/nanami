@@ -138,10 +138,14 @@ export class MsgProcessor {
   processPreparing() {
     this.isLiving = false
     // TODO
-    // this.generateWakuInfo()
+    this.generateRecordingInfo()
   }
 
   processInteractWord() {
     // TODO
+  }
+
+  generateRecordingInfo() {
+
   }
 }
