@@ -110,7 +110,6 @@ export class MsgProcessor {
       senderLiveLevel: senderLiveLevel,
       player_mode: dmJson.player_mode,
       show_player_type: dmJson.show_player_type,
-      is_audited: dmJson.is_audited,
       recommend_score: dmJson.recommend_score,
     }
     this.mongoHelper.insertOne(this.dbName, Collections.DANMU, doc)

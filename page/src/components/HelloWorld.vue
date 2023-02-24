@@ -23,7 +23,7 @@
             variant="text"
           >
             <v-icon
-              icon="mdi-view-dashboard"
+              :icon="mdiViewDashboard"
               size="large"
               start
             />
@@ -43,7 +43,7 @@
             variant="flat"
           >
             <v-icon
-              icon="mdi-speedometer"
+              :icon="mdiSpeedometer"
               size="large"
               start
             />
@@ -61,7 +61,7 @@
             variant="text"
           >
             <v-icon
-              icon="mdi-account-group"
+              :icon="mdiAccountGroup"
               size="large"
               start
             />
@@ -75,5 +75,6 @@
 </template>
 
 <script setup lang="ts">
+import {mdiSpeedometer, mdiAccountGroup, mdiViewDashboard} from '@mdi/js'
   //
 </script>
