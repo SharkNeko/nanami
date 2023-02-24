@@ -1,9 +1,9 @@
 import { EventEmitter } from 'eventemitter3'
 import TypedEmitter from "typed-emitter"
-import { ConnManager } from './ConnManager'
+import { ConnManager } from './ConnManager.js'
 import { MessageEvents } from './types/events'
-import { MongoHelper } from './MongoHelper'
-import { MsgProcessor } from './MsgProcessor'
+import { MongoHelper } from './MongoHelper.js'
+import { MsgProcessor } from './MsgProcessor.js'
 
 export class DanmakuWatcher {
   connManager: ConnManager

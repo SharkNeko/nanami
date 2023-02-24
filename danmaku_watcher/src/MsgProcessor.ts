@@ -2,7 +2,8 @@ import TypedEmitter from 'typed-emitter'
 import { DANMU_MSG, SEND_GIFT, _DANMU_MSG } from 'tiny-bilibili-ws'
 import { MessageEvents } from './types/events'
 import { AREA_RANK_CHANGED_DATA, LIVE_DATA, MSG_DATA, MSG_UNION, PREPARING_DATA } from './types/msg'
-import type { MongoHelper } from './MongoHelper'
+import fetch from 'node-fetch'
+import type { MongoHelper } from './MongoHelper.js'
 
 const Collections = {
   DANMU: 'danmu',
@@ -25,6 +26,10 @@ export class MsgProcessor {
     this.isLiving = false
   }
 
+  get dbName()  {
+    return 'bili_' + this.roomId
+  }
+
   async init() {
     await this.getIsLiving()
     this.eventBus.on('msg', (msg) => this.processMsg(msg))
@@ -33,7 +38,7 @@ export class MsgProcessor {
   async getIsLiving() {
     const url = `https://api.live.bilibili.com/xlive/web-room/v1/index/getRoomPlayInfo?room_id=${this.roomId}`
     const res = await fetch(url)
-    const info = await res.json()
+    const info: any = await res.json()
     if (info.code === 0) {
       if (info.data?.live_status === 1) {
         this.isLiving = true
@@ -43,10 +48,6 @@ export class MsgProcessor {
     }
   }
 
-  getDb() {
-    return this.mongoHelper.getDb('bili_' + this.roomId)
-  }
-
   localDate(v?: number) {
     const d = new Date(v || Date.now())
     d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
@@ -54,6 +55,7 @@ export class MsgProcessor {
   }
 
   processMsg(msg: MSG_DATA) {
+    console.log('processMsg')
     if (this.ignoreMsgList.includes(msg.cmd)) {
       return
     }
@@ -111,7 +113,7 @@ export class MsgProcessor {
       is_audited: dmJson.is_audited,
       recommend_score: dmJson.recommend_score,
     }
-    this.getDb()?.collection(Collections.DANMU).insertOne(doc)
+    this.mongoHelper.insertOne(this.dbName, Collections.DANMU, doc)
   }
 
   processAreaRankChanged(content: AREA_RANK_CHANGED_DATA) {
@@ -121,7 +123,7 @@ export class MsgProcessor {
       localDate: this.localDate(content.data.timestamp * 1000),
       action_type: content.data.action_type,
     }
-    this.getDb()?.collection(Collections.AREA_RANK).insertOne(doc)
+    this.mongoHelper.insertOne(this.dbName, Collections.AREA_RANK, doc)
   }
 
   processBeginLive(content: LIVE_DATA) {
@@ -131,7 +133,7 @@ export class MsgProcessor {
         live_model: content.live_model,
         localDate: this.localDate(content.live_time * 1000),
       }
-      this.getDb()?.collection(Collections.BEGIN_LIVE).insertOne(doc)
+      this.mongoHelper.insertOne(this.dbName, Collections.BEGIN_LIVE, doc)
     }
   }
 
