@@ -17,34 +17,33 @@ export class MongoHelper {
   }
 
   async connect() {
-    // if (!this.client) {
-    //   this.client = new MongoClient(this.url)
-    //   await this.client.connect()
-    // }
+    if (!this.client) {
+      this.client = new MongoClient(this.url)
+      await this.client.connect()
+    }
   }
 
   closeMongo() {
-    // if (this.client) {
-    //   this.client.close()
-    // }
+    if (this.client) {
+      this.client.close()
+    }
   }
 
   getDb(name: string) {
-    // let db = this.dbList[name]
-    // if (db) {
-    //   return db
-    // } else {
-    //   const newDb = this.client?.db(name)
-    //   if (newDb) {
-    //     this.dbList[name] = newDb
-    //     return newDb
-    //   }
-    // }
+    let db = this.dbList[name]
+    if (db) {
+      return db
+    } else {
+      const newDb = this.client?.db(name)
+      if (newDb) {
+        this.dbList[name] = newDb
+        return newDb
+      }
+    }
   }
 
   insertOne(dbName: string, collection: string, doc: any) {
-    // this.dbList[dbName].collection(collection).insertOne(doc)
-    fs.appendFileSync(`./cache/${dbName}_${collection}.json`, JSON.stringify(doc) + '\n')
+    this.dbList[dbName].collection(collection).insertOne(doc)
   }
 }
 
