@@ -7,6 +7,10 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS",
       "env": {
         "DOTENV_CONFIG_PATH": ".env"
+      },
+      "env_development": {
+        "DOTENV_CONFIG_PATH": ".env",
+        "CLASH": "true"
       }
     }
   ]

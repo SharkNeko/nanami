@@ -11,3 +11,18 @@ export function createCountLogger(interval) {
     count += 1
   }
 }
+
+export function parseCookie(cookie) {
+  if (!cookie) {
+    return {}
+  }
+  const result = {}
+  const kvList = cookie.split(';')
+  for (const kvStr of kvList) {
+    const kvPair = kvStr.split('=')
+    if (kvPair[0].trim()) {
+      result[kvPair[0].trim()] = (kvPair[1] || '').trim()
+    }
+  }
+  return result
+}

@@ -1,5 +1,4 @@
 export async function sendNotification(title, desp) {
-  return
   const body = {
     title, desp,
   }

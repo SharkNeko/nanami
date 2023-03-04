@@ -4,9 +4,8 @@ import { replyWb } from './comment.js'
 import { sendNotification } from './notify.js'
 
 const wb_uid = 7198559139 // nana7mi
-console.log('openaikey', process.env.OPENAI_KEY)
 
-let lastWb = ''
+let prevWbText = ''
 
 async function getLatestWb() {
   const url = `https://m.weibo.cn/api/container/getIndex?containerid=107603${wb_uid}`
@@ -16,12 +15,22 @@ async function getLatestWb() {
     const cards = respData.data.cards
     if (cards.length === 0) {
       console.log('Fetch Weibo Cards empty')
-    } else {
-      console.log('Fetch Latest Weibo', cards[0]?.mblog?.text)
     }
-    if (cards[0]?.mblog?.text !== lastWb) {
-      lastWb = cards[0].mblog.text
-      return cards[0].mblog.text
+    const latestWb = cards[0]?.mblog
+    if (!latestWb) {
+      console.log('Latest Weibo is null')
+      return
+    }
+    if (!prevWbText) {
+      prevWbText = latestWb.text
+      console.log('启动程序获取第一条微博', prevWbText)
+    }
+    if (latestWb.text !== prevWbText) {
+      prevWbText = latestWb.text
+      return {
+        content: latestWb.text,
+        id: latestWb.id
+      }
     }
   } catch (e) {
     console.log('Fetch Weibo Error.', 'Cards length: ', respData.data.cards.length, e)
@@ -34,9 +43,9 @@ async function main() {
     try {
       const latestWb = await getLatestWb()
       if (latestWb) {
-        console.log('New Weibo Content: ', latestWb)
-        sendNotification('七海微博更新啦！', latestWb)
-        replyWb(123, latestWb)
+        console.log('New Weibo Content: ', latestWb.content)
+        sendNotification('七海微博更新啦！', latestWb.content)
+        replyWb(latestWb.id, latestWb.content)
       }
     } catch (e) {
       console.log('Error', e)
