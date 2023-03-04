@@ -66,10 +66,11 @@ async function completeChat(content) {
 }
 
 async function commentWb(id, content) {
+  let _content = content.trim().slice(0, 120)
   const url = 'https://weibo.com/ajax/comments/create'
   const params = new URLSearchParams()
   params.append('id', id)
-  params.append('comment', content.trim() + '（chatGPT自动生成）')
+  params.append('comment', _content + '（chatGPT自动生成）')
   params.append('is_comment', '0')
   params.append('comment_ori', '0')
   params.append('is_repost', '0')
