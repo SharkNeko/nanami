@@ -8,11 +8,15 @@ const app = new Koa()
 const router = new Router()
 
 router.post('/set_wb_cookie', (ctx, next) => {
-  console.log('set_wb_cookie', ctx.request.body)
+  console.log('api set_wb_cookie', ctx.request.body)
   if (typeof ctx.request.body.wb_cookie === 'string') {
     redisClient.set(redisKeys.wb_cookie, ctx.request.body.wb_cookie)
+    console.log('set WB_COOKIE success')
+    ctx.body = {result: 'success'}
+  } else {
+    console.log('missing WB_COOKIE field')
+    ctx.body = {result: 'missing wb_cookie field'}
   }
-  ctx.body = {code: 200}
 })
 
 
