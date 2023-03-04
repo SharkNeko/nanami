@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "admin_server",
+      "script": "../admin_server/src/index.js",
+      "node_args": "-r ../admin_server/node_modules/dotenv/config",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "env": {
+        "DOTENV_CONFIG_PATH": ".env"
+      }
+    }
+  ]
+}
