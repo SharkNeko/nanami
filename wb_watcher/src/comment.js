@@ -1,7 +1,10 @@
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import fetch from 'node-fetch'
+import tunnel from 'tunnel'
 import { createClient } from 'redis';
 import { parseCookie } from './utils.js';
-import tunnel from 'tunnel'
 
 const redisClient = createClient();
 redisClient.on('error', err => console.log('Redis Client Error', err));
@@ -16,16 +19,21 @@ export async function replyWb(wb_id, content) {
 }
 
 async function queryGPT(wb) {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const promptList = fs.readFileSync(path.resolve(__dirname, 'prompt.txt'), 'utf-8').split('\n').filter((line) => line)
+  const prompt = promptList[Math.floor(Math.random() * promptList.length)]
+  console.log('使用prompt请求chatGPT：', prompt)
   let comment
   try {
     comment = await completeChat({
       model: 'gpt-3.5-turbo',
       messages: [{
         role: 'system',
-        content: '海海是一名年轻的女性虚拟主播，假设你是她的粉丝'
+        content: prompt.replace('${wb}', wb)
       }, {
         role: 'user',
-        content: `海海发了条微博，内容是：“${wb}”。请使用中文，不需要包含称呼，用一个极其弱智和略带嘲讽的语气，用反问句回复这个微博。注意，你的回复只应该包含回复内容，并且不能用双引号括起来，必须在30字以内。`
+        content: prompt
       }]
     })
     console.log('获取chatGPT回复：', comment)
