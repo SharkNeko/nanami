@@ -12,5 +12,6 @@
     "skipDefaultLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
+    "outDir": "dist"
   }
 }

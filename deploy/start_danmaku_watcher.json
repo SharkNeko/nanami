@@ -2,9 +2,12 @@
   "apps": [
     {
       "name": "danmaku_watcher",
-      "script": "../danmaku_watcher/node_modules/.bin/ts-node",
-      "args": "../danmaku_watcher/src/index.ts",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS"
+      "script": "../danmaku_watcher/dist/index.js",
+      "args": "-r ../danmaku_watcher/node_modules/dotenv/config",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "env": {
+        "DOTENV_CONFIG_PATH": ".env"
+      }
     }
   ]
 }
