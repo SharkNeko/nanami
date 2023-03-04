@@ -5,6 +5,7 @@
 // @description  更新cookie以保持登录
 // @match        https://weibo.com/*
 // @grant        GM_xmlhttpRequest
+// @connect      *
 // ==/UserScript==
 
 (function() {
