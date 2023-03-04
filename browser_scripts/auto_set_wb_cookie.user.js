@@ -30,7 +30,7 @@
       }
     }
     const data = JSON.stringify({ wb_cookie: extractCookieStrList.join(';') })
-    if (!url) {
+    if (url) {
       GM_xmlhttpRequest({
         method: 'POST',
         url,
