@@ -6,12 +6,8 @@ export function createCountLogger(interval) {
   let count = 0
   return () => {
     if (count % interval === 0) {
-      log('Count', count)
+      console.log('Count', count)
     }
     count += 1
   }
-}
-
-export function log(...args) {
-  console.log(...args)
 }
