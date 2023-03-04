@@ -5,7 +5,7 @@
   "main": "watcher.js",
   "type": "module",
   "scripts": {
-    "start": "node -r dotenv/config src/index.js",
+    "start": "node -r dotenv/config src/index.js"
   },
   "author": "",
   "license": "ISC",
