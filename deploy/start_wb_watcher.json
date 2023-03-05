@@ -5,6 +5,7 @@
       "script": "../wb_watcher/src/index.js",
       "node_args": "-r ../wb_watcher/node_modules/dotenv/config",
       "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "watch": ["../wb_watcher"],
       "env": {
         "DOTENV_CONFIG_PATH": ".env"
       },
