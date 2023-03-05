@@ -21,7 +21,7 @@ export async function replyWb(wb_id, content) {
 async function queryGPT(wb) {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const promptList = fs.readFileSync(path.resolve(__dirname, 'prompt.txt'), 'utf-8').split('\n').filter((line) => line)
+  const promptList = fs.readFileSync(path.resolve(__dirname, '../prompt.txt'), 'utf-8').split('\n').filter((line) => line)
   const prompt = promptList[Math.floor(Math.random() * promptList.length)]
   console.log('使用prompt请求chatGPT：', prompt)
   let comment
