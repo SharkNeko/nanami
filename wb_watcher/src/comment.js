@@ -14,7 +14,7 @@ export async function replyWb(wb_id, content) {
   const comment = await queryGPT(content)
   if (comment) {
     const result = await commentWb(wb_id, comment)
-    console.log(`Comment ${wb_id} result`, result)
+    console.log(`Comment ${wb_id} result`, result.msg)
   }
 }
 
