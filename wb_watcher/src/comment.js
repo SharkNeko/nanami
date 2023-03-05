@@ -30,10 +30,10 @@ async function queryGPT(wb) {
       model: 'gpt-3.5-turbo',
       messages: [{
         role: 'system',
-        content: '假设海海是你最喜欢的一名女性主播。'
+        content: prompt
       }, {
         role: 'user',
-        content: prompt.replace('${wb}', wb)
+        content: wb
       }]
     })
     console.log('获取chatGPT回复：', comment)
