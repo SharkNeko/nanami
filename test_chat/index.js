@@ -4,18 +4,23 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-const wb = '睡！​​​​​​​​​​​​​​​​​​'
+const wb = '睡！'
 
 async function main() {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const promptList = fs.readFileSync(path.resolve(__dirname, 'prompt.txt'), 'utf-8').split('\n')
+  const promptList = fs.readFileSync(path.resolve(__dirname, './prompt.txt'), 'utf-8')
+  .split('\n')
+  .map(line => line.trim())
+  .filter((line) => line)
+  .filter(line => !line.startsWith('#'))
+  console.log(promptList)
 
   const content = {
     model: 'gpt-3.5-turbo',
     messages: [{
       role: 'system',
-      content: '假设海海是你最喜欢的一名女性主播。她发了条微博，请用脑残粉的语气评论这条微博，回复不应该包含称呼，必须在70字以内。'
+      content: '假设海海是你最喜欢的一名女性主播。她发了条微博，请用粉丝的语气回复这条微博，回复不应该包含称呼，必须在10字以内。'
     }, {
       role: 'user',
       content: wb
@@ -28,12 +33,6 @@ async function main() {
       'Authorization': `Bearer ${process.env.OPENAI_KEY}`
     },
     body: JSON.stringify(content),
-    agent: tunnel.httpsOverHttp({
-      proxy: {
-        host: '192.168.0.241',
-        port: 7890
-      }
-    })
   })
   const data = await resp.json()
   const reply = data.choices[0].message.content.replaceAll('\n', '').replaceAll(' ', '')
