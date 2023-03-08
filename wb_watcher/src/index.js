@@ -2,6 +2,10 @@ import fetch from 'node-fetch'
 import { sleep } from './utils.js'
 import { replyWb } from './comment.js'
 import { sendNotification } from './notify.js'
+import {createRequire} from 'module'
+const require = createRequire(import.meta.url)
+const config = require('../wb_watcher.config.json')
+console.log('config', config)
 
 const wb_uid = 7198559139 // nana7mi
 
@@ -45,7 +49,9 @@ async function main() {
       if (latestWb) {
         console.log('New Weibo Content: ', latestWb.content)
         sendNotification('七海微博更新啦！', latestWb.content)
-        replyWb(latestWb.id, latestWb.content)
+        if (config.auto_reply) {
+          replyWb(latestWb.id, latestWb.content)
+        }
       }
     } catch (e) {
       console.log('Error', e)
