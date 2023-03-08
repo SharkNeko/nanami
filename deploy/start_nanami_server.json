@@ -5,6 +5,7 @@
       "script": "../nanami_server/src/index.js",
       "node_args": "-r ../nanami_server/node_modules/dotenv/config",
       "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "watch": ["../nanami_server"],
       "env": {
         "DOTENV_CONFIG_PATH": ".env"
       }
