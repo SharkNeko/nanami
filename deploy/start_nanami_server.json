@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "nanami_server",
+      "script": "../nanami_server/src/index.js",
+      "node_args": "-r ../nanami_server/node_modules/dotenv/config",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "env": {
+        "DOTENV_CONFIG_PATH": ".env"
+      }
+    }
+  ]
+}
