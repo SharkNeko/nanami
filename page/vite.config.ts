@@ -17,6 +17,9 @@ export default defineConfig({
       autoImport: true,
     }),
   ],
+  build: {
+    assetsDir: 'static'
+  },
   define: { 'process.env': {} },
   resolve: {
     alias: {

@@ -2,7 +2,7 @@
 // @name         Weibo Cookie Sender
 // @namespace    weibo-cookie-sender
 // @version      1.01
-// @description  更新cookie以保持登录
+// @description  更新微博cookie以保持登录
 // @match        https://weibo.com/*
 // @match        https://weibo.com
 // @grant        GM_xmlhttpRequest
