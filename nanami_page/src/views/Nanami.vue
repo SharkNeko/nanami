@@ -8,7 +8,9 @@ const text = ref('')
 
 onMounted(async () => {
   try {
-    const resp = await fetch('/api/test_api')
+    const resp = await fetch('/api/test_api', {
+      method: 'post'
+    })
     const data = await resp.json()
     text.value = data.text
   } catch (e) {
