@@ -4,6 +4,7 @@
       "name": "nanami_server",
       "script": "../nanami_server/src/index.js",
       "node_args": "-r ../nanami_server/node_modules/dotenv/config",
+      "instances": "max",
       "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS",
       "watch": ["../nanami_server"],
       "env": {
