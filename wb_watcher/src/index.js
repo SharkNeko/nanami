@@ -3,6 +3,7 @@ import { sleep } from './utils.js'
 import { replyWb } from './comment.js'
 import { sendNotification } from './notify.js'
 import {createRequire} from 'module'
+import fs from 'fs'
 const require = createRequire(import.meta.url)
 const config = require('../wb_watcher.config.json')
 console.log('config', config)
@@ -20,7 +21,9 @@ async function getLatestWb() {
     if (cards.length === 0) {
       console.log('Fetch Weibo Cards empty')
     }
-    const latestWb = cards[0]?.mblog
+    const blogs = cards.map(card => card.mblog)
+    blogs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    const latestWb = blogs[0]
     if (!latestWb) {
       console.log('Latest Weibo is null')
       return
