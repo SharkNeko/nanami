@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -11,16 +11,18 @@
 // @license      MIT
 // ==/UserScript==
 
-;(function () {
+; (function () {
   const check = setInterval(() => {
-    let groupEl = document.querySelector('.bottom-actions .p-relative')
+    let groupEl = document.querySelector('.bottom-actions.p-relative')
     let chatPanel = document.querySelector('.chat-history-panel')
-    let chatInput = document.querySelectorAll('.chat-input')[1]
+    let chatInput = document.querySelector('textarea.chat-input')
+
+
     if (groupEl && chatPanel && chatInput) {
       clearInterval(check)
       main()
     }
-  }, 100)
+  }, 1000)
 
   function main() {
     // Const
@@ -45,10 +47,11 @@
       panelOpen: false,
     }
 
+
     const refs = {
-      nativeActionGroup: document.querySelector('.bottom-actions .p-relative'),
+      nativeActionGroup: document.querySelector('.bottom-actions.p-relative'),
       nativeChatPanel: document.querySelector('.chat-history-panel'),
-      nativeChatInput: document.querySelectorAll('.chat-input')[1],
+      nativeChatInput: document.querySelector('textarea.chat-input'),
 
       panel: null,
       panelBtn: null,
@@ -69,7 +72,7 @@
     let chatTimer = null
     let isComposition = false
 
-    GM_addStyle(pageStyle)
+    GM_addStyle(pageStyle())
     initUI()
     initEvent()
 
@@ -77,7 +80,7 @@
 
     function initUI() {
       const panelBtn = createPanelBtn()
-      nativeActionGroup.appendChild(panelBtn)
+      refs.nativeActionGroup.appendChild(panelBtn)
 
       const panel = createPanel()
       refs.nativeChatPanel.appendChild(panel)
@@ -87,7 +90,10 @@
       const inputEl = refs.nativeChatInput
       inputEl.addEventListener('input', () => {
         if (state.replaceSens && !isComposition) {
-          inputEl.value = replaceSensWord(inputEl.value)
+          const safeContent = replaceSensWord(inputEl.value)
+          if (inputEl.value !== safeContent) {
+            inputEl.value = replaceSensWord(inputEl.value)
+          }
         }
       })
       inputEl.addEventListener('compositionstart', () => {
@@ -104,7 +110,7 @@
     function createPanelBtn() {
       const btn = document.createElement('button')
       btn.className = 'nnm-panel-btn'
-      btn.innerText = state.panelOpen ? '打开面板' : '关闭面板'
+      btn.innerText = state.panelOpen ? '关闭面板' : '打开面板'
       btn.addEventListener('click', () => setPanelOpen(!state.panelOpen))
       refs.panelBtn = btn
       return btn
@@ -112,7 +118,7 @@
 
     function createPanel() {
       const panel = document.createElement('div')
-      panel.className = 'nnm-panel'
+      panel.className = 'nnm-panel nnm-hidden'
       panel.innerHTML = `
       <div>
         <div class="nnm-group">
@@ -175,7 +181,7 @@
       refs.unicycleInput = panel.querySelector('#unicycle-input')
 
       refs.replaceSensInput = panel.querySelector('#replace-sens-input')
-      refs.checked = state.replaceSens
+      refs.replaceSensInput.checked = state.replaceSens
       refs.replaceSensInput.addEventListener('change', (e) => setReplaceSens(e.target.checked))
 
       refs.panel = panel
@@ -227,7 +233,7 @@
     // Update UI
 
     function updatePanelBtn() {
-      refs.panelBtn.innerText = state.panelOpen ? '打开面板' : '关闭面板'
+      refs.panelBtn.innerText = state.panelOpen ? '关闭面板' : '打开面板'
     }
 
     function updatePanel() {
@@ -338,13 +344,18 @@
     function pageStyle() {
       return `
       .nnm-hidden {
-        dispaly: none !important;
+        display: none !important;
       }
       .nnm-panel-btn {
-
+          cursor:pointer;
       }
       .nnm-panel {
         position: absolute;
+        bottom: 0;
+        background: wheat;
+        z-index: 999;
+        width: 100%;
+        transform: translateY(-100%);
       }
       .nnm-btn {
 
@@ -374,6 +385,7 @@
       绷不住: '蚌不住',
       猩猩: '猩星',
       自杀: '紫砂',
+      op: '〇p',
     }
   }
 })()
