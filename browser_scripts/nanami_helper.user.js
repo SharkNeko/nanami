@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.1
+// @version      1.0.2
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -26,27 +26,29 @@
 
   function main() {
     // Const
-    const KEY_PREFIX = 'nnmHelper'
+    const KEY_PREFIX = 'nnmHelper_'
     const MAX_LENGTH_KEY = KEY_PREFIX + 'maxLength'
     const DIFF_COUNT_KEY = KEY_PREFIX + 'diffCount'
     const INTERVAL_KEY = KEY_PREFIX + 'interval'
     const REPLACE_SENS_KEY = KEY_PREFIX + 'replaceSens'
+    const CALL_STR_KEY = KEY_PREFIX + 'callStr'
+    const UNICYCLE_STR_KEY = KEY_PREFIX + 'unicyleStr'
 
     const WANAN_MODE = 'wanan_mode'
     const CALL_MODE = 'call_mode'
     const UNICYCLE_MODE = 'unicycle_mode'
 
     const state = {
-      maxLength: GM_getValue(MAX_LENGTH_KEY) || 40, // chat content length limit
-      diffCount: GM_getValue(DIFF_COUNT_KEY) || 5, // count of unique comment in wanan mode and call mode
-      interval: GM_getValue(INTERVAL_KEY) || 6, // auto send comment interval
+      maxLength: parseInt(GM_getValue(MAX_LENGTH_KEY)) || 40, // chat content length limit
+      diffCount: parseInt(GM_getValue(DIFF_COUNT_KEY)) || 5, // count of unique comment in wanan mode and call mode
+      interval: parseInt(GM_getValue(INTERVAL_KEY)) || 6, // auto send comment interval
       replaceSens: GM_getValue(REPLACE_SENS_KEY) === 'on',
-      language: 'zh_CN',
       mode: '',
+      callStr: GM_getValue(CALL_STR_KEY) || '七海',
+      unicycleStr: GM_getValue(UNICYCLE_STR_KEY) || '',
 
       panelOpen: false,
     }
-
 
     const refs = {
       nativeActionGroup: document.querySelector('.bottom-actions.p-relative'),
@@ -146,7 +148,7 @@
           <div class="nnm-group">
             <button class="nnm-btn" id="start-unicycle-btn">开始独轮车</button>
             <button class="nnm-btn" id="stop-unicycle-btn">停止独轮车</button>
-            <input id="unicycle-input" type="text" placeholder="用“|”分割弹幕"></input>
+            <textarea id="unicycle-input" type="text" placeholder="用“|”或换行分割弹幕"></textarea>
           </div>
         </div>
       </div>
@@ -166,7 +168,7 @@
       refs.startUnicycleBtn = panel.querySelector('#start-unicycle-btn')
       refs.startUnicycleBtn.addEventListener('click', () => setMode(UNICYCLE_MODE))
 
-      refs.stopUnicycleBtn = panel.querySelector('#start-unicycle-btn')
+      refs.stopUnicycleBtn = panel.querySelector('#stop-unicycle-btn')
       refs.stopUnicycleBtn.addEventListener('click', () => setMode(''))
 
       refs.intervalInput = panel.querySelector('#interval-input')
@@ -175,10 +177,15 @@
 
       refs.maxlengthInput = panel.querySelector('#maxlength-input')
       refs.maxlengthInput.value = state.maxLength
-      refs.intervalInput.addEventListener('change', (e) => setMaxlength(e.target.value, false))
+      refs.maxlengthInput.addEventListener('change', (e) => setMaxlength(e.target.value, false))
 
       refs.callInput = panel.querySelector('#call-input')
+      refs.callInput.value = state.callStr
+      refs.callInput.addEventListener('change', (e) => setCallStr(e.target.value, false))
+
       refs.unicycleInput = panel.querySelector('#unicycle-input')
+      refs.unicycleInput.value = state.unicycleStr
+      refs.unicycleInput.addEventListener('change', (e) => setUnicycleStr(e.target.value, false))
 
       refs.replaceSensInput = panel.querySelector('#replace-sens-input')
       refs.replaceSensInput.checked = state.replaceSens
@@ -209,7 +216,7 @@
       state.interval = parseInt(value)
       GM_setValue(INTERVAL_KEY, value)
       if (update) {
-        // todo
+        refs.intervalInput.value = value
       }
     }
 
@@ -217,7 +224,23 @@
       state.maxLength = parseInt(value)
       GM_setValue(MAX_LENGTH_KEY, value)
       if (update) {
-        // todo
+        refs.maxlengthInput.value = value
+      }
+    }
+
+    function setCallStr(value, update) {
+      state.callStr = value
+      GM_setValue(CALL_STR_KEY, value)
+      if (update) {
+        refs.callInput.value = value
+      }
+    }
+
+    function setUnicycleStr(value, update) {
+      state.unicycleStr = value
+      GM_setValue(UNICYCLE_STR_KEY, value)
+      if (update) {
+        refs.unicycleInput.value = value
       }
     }
 
@@ -260,8 +283,8 @@
         show(refs.stopCallBtn)
         hide(refs.startCallBtn)
       } else if (state.mode === UNICYCLE_MODE) {
-        show(refs.stopWananBtn)
-        hide(refs.startWananBtn)
+        show(refs.stopUnicycleBtn)
+        hide(refs.startUnicycleBtn)
       }
     }
 
@@ -275,21 +298,21 @@
       if (mode === UNICYCLE_MODE) {
         chats = generateUnicycle()
       } else if (mode === WANAN_MODE) {
-        chats = gennerateCall()
-      } else if (mode === CALL_MODE) {
         chats = generateWanan()
+      } else if (mode === CALL_MODE) {
+        chats = gennerateCall()
       }
-
       const run = () => {
         sendChat(chats[index])
         index++
         if (index >= chats.length) {
           index = 0
         }
+        let interval = state.interval || 6
+        chatTimer = setTimeout(run, state.interval * 1000)
       }
 
       run()
-      chatTimer = setInterval(run, state.interval * 1000)
     }
 
     // helper
@@ -312,12 +335,17 @@
       return result
     }
 
-    function generateUnicycle(content) {
-      return content.split('|')
+    function generateUnicycle() {
+      const content = refs.unicycleInput.value
+      let result = []
+      content.split('|').forEach(element => {
+        result = result.concat(element.split('\n'))
+      });
+      return result
     }
 
     function gennerateCall(...args) {
-      return []
+      return ['\\七海/', '\七海//']
     }
 
     function generateWanan() {
@@ -331,6 +359,9 @@
     }
 
     function sendChat(content) {
+      if (!content) {
+        return
+      }
       const safeContent = replaceSensWord(content)
       let evt = document.createEvent('HTMLEvents')
       evt.initEvent('input', true, true)
@@ -355,13 +386,27 @@
         background: wheat;
         z-index: 999;
         width: 100%;
-        transform: translateY(-100%);
+        transform: translateY(-00%);
       }
       .nnm-btn {
-
+        height: 30px;
       }
       .nnm-group {
-
+        display: flex;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+      #unicycle-input {
+        min-height: 100px;
+        width: 60%;
+        box-sizing: border-box;
+      }
+      #call-input {
+        height: 25px;
+        width: 60%;
+        box-sizing: border-box;
       }
     `
     }
@@ -386,6 +431,7 @@
       猩猩: '猩星',
       自杀: '紫砂',
       op: '〇p',
+      4: '四',
     }
   }
 })()
