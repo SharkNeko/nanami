@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.2
+// @version      1.0.3
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -41,7 +41,7 @@
     const state = {
       maxLength: parseInt(GM_getValue(MAX_LENGTH_KEY)) || 40, // chat content length limit
       diffCount: parseInt(GM_getValue(DIFF_COUNT_KEY)) || 5, // count of unique comment in wanan mode and call mode
-      interval: parseInt(GM_getValue(INTERVAL_KEY)) || 6, // auto send comment interval
+      interval: parseFloat(GM_getValue(INTERVAL_KEY)) || 6, // auto send comment interval
       replaceSens: GM_getValue(REPLACE_SENS_KEY) === 'on',
       mode: '',
       callStr: GM_getValue(CALL_STR_KEY) || '七海',
@@ -213,7 +213,7 @@
     }
 
     function setIntervalState(value, update) {
-      state.interval = parseInt(value)
+      state.interval = parseFloat(value)
       GM_setValue(INTERVAL_KEY, value)
       if (update) {
         refs.intervalInput.value = value
@@ -308,11 +308,11 @@
         if (index >= chats.length) {
           index = 0
         }
-        let interval = state.interval || 6
-        chatTimer = setTimeout(run, state.interval * 1000)
       }
 
       run()
+      let interval = state.interval || 6
+      chatTimer = setInterval(run, interval * 1000)
     }
 
     // helper
