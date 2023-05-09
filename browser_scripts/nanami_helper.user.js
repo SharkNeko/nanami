@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.7
+// @version      1.0.8
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -458,7 +458,10 @@
       自杀: '紫砂',
       op: '〇p',
       4: '四',
-      'as': 'αs'
+      'as': 'αs',
+      前世: '前.世',
+      抖音: '斗音',
+      智障: '智樟',
     }
   }
 })()
