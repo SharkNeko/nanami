@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.4
+// @version      1.0.5
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -400,11 +400,10 @@
       }
       .nnm-panel {
         position: absolute;
-        bottom: 0;
+        bottom: 146px;
         background: wheat;
         z-index: 999;
         width: 100%;
-        transform: translateY(-00%);
       }
       .nnm-btn {
         height: 30px;
