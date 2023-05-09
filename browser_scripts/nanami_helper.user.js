@@ -345,7 +345,25 @@
     }
 
     function gennerateCall(...args) {
-      return ['\\七海/', '\七海//']
+      const argsLen = args.length
+
+      let result = []
+
+      for (let i = 0; i < state.diffCount; i++) {
+        let callStr = ''
+        let tempCallStr = ''
+        let j = 0
+        while (tempCallStr.length <= state.maxLength) {
+          callStr = tempCallStr
+          tempCallStr += `\\${args[j % argsLen]}/`
+          if (i === j) {
+            tempCallStr += '/'
+          }
+          j++
+        }
+        result.push(callStr)
+      }
+      return result
     }
 
     function generateWanan() {
