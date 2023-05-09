@@ -11,12 +11,11 @@
 // @license      MIT
 // ==/UserScript==
 
-; (function () {
+;(function () {
   const check = setInterval(() => {
     let groupEl = document.querySelector('.bottom-actions.p-relative')
     let chatPanel = document.querySelector('.chat-history-panel')
     let chatInput = document.querySelector('textarea.chat-input')
-
 
     if (groupEl && chatPanel && chatInput) {
       clearInterval(check)
@@ -95,6 +94,10 @@
           const safeContent = replaceSensWord(inputEl.value)
           if (inputEl.value !== safeContent) {
             inputEl.value = replaceSensWord(inputEl.value)
+            setTimeout(() => {
+              const evt = new Event('input')
+              inputEl.dispatchEvent(evt)
+            })
           }
         }
       })
@@ -104,6 +107,10 @@
       inputEl.addEventListener('compositionend', () => {
         isComposition = false
         inputEl.value = replaceSensWord(inputEl.value)
+        setTimeout(() => {
+          const evt = new Event('input')
+          inputEl.dispatchEvent(evt)
+        })
       })
     }
 
@@ -338,14 +345,15 @@
     function generateUnicycle() {
       const content = refs.unicycleInput.value
       let result = []
-      content.split('|').forEach(element => {
+      content.split('|').forEach((element) => {
         result = result.concat(element.split('\n'))
-      });
+      })
       return result
     }
 
-    function gennerateCall(...args) {
-      const argsLen = args.length
+    function gennerateCall() {
+      const callStrList = state.callStr.split(' ').filter((s) => s)
+      const argsLen = callStrList.length
 
       let result = []
 
@@ -355,7 +363,7 @@
         let j = 0
         while (tempCallStr.length <= state.maxLength) {
           callStr = tempCallStr
-          tempCallStr += `\\${args[j % argsLen]}/`
+          tempCallStr += `\\${callStrList[j % argsLen]}/`
           if (i === j) {
             tempCallStr += '/'
           }
@@ -381,9 +389,10 @@
         return
       }
       const safeContent = replaceSensWord(content)
-      let evt = document.createEvent('HTMLEvents')
-      evt.initEvent('input', true, true)
+      // let evt = document.createEvent('HTMLEvents')
+      // evt.initEvent('input', true, true)
       refs.nativeChatInput.value = safeContent
+      let evt = new Event('input')
       refs.nativeChatInput.dispatchEvent(evt)
       document.querySelector('.live-skin-highlight-button-bg').click()
     }
