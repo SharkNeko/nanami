@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.8
+// @version      1.0.9
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -455,13 +455,21 @@
       牛牛: '牛䒜',
       绷不住: '蚌不住',
       猩猩: '猩星',
-      自杀: '紫砂',
+      自杀: '紫沙',
       op: '〇p',
       4: '四',
       'as': 'αs',
       前世: '前.世',
       抖音: '斗音',
       智障: '智樟',
+      蛙: '哇',
+      栽种: '载钟',
+      好烧: '好焼',
+      哈人: '哈银',
+      苦逼: '苦比',
+      拼多多: '并夕夕',
+      弱智: 'rz',
+      上分: '上芬',
     }
   }
 })()
