@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.9
+// @version      1.0.10
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -473,7 +473,15 @@
       滑: '猾',
       油管: '油馆',
       恶心: '悪心',
-      ky: 'ĸy'
+      ky: 'k丫',
+      成人: '成仁',
+      血压: '血圧',
+      抗吧: '抗巴',
+      贫贱: '贫溅',
+      免费: '免費',
+      猝死: '萃死',
+      丢人: '丢仁',
+      急了: '急叻',
     }
   }
 })()
