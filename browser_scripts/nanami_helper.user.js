@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.10
+// @version      1.0.11
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -482,6 +482,7 @@
       猝死: '萃死',
       丢人: '丢仁',
       急了: '急叻',
+      脏: '賍',
     }
   }
 })()
