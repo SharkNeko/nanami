@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.11
+// @version      1.0.12
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -483,6 +483,13 @@
       丢人: '丢仁',
       急了: '急叻',
       脏: '賍',
+      bug: 'bμg',
+      耗材: '秏材',
+      举办: '挙办',
+      三年: '3年',
+      氪金: '课金',
+      sm: 'sΜ',
+
     }
   }
 })()
