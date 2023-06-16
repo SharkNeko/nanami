@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.13
+// @version      1.0.14
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -497,6 +497,12 @@
       然然: '然䔳',
       墨: '默',
       握手: '握.手',
+      ip: '1p',
+      复活: '復活',
+      滚: '磙',
+      工商: 'エ商',
+      耳机: '耳機',
+      哇哇哇: '哇哇娃',
     }
   }
 })()
