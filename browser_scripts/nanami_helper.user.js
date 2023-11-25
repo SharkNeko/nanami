@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.21
+// @version      1.0.22
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -440,7 +440,6 @@
     const rules = {
       '01': '〇1',
       99: '九九',
-      狗: '苟',
       看看: '看㸔',
       sc: 'sс',
       雷: '镭',
@@ -486,7 +485,7 @@
       举办: '挙办',
       三年: '3年',
       氪金: '课金',
-      sm: 'sΜ',
+      sm: 'SM',
       矮: '躷',
       骗人: '骗仁',
       牛魔: '䒜魔',
