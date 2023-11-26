@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.24
+// @version      1.0.25
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -106,11 +106,13 @@
       })
       inputEl.addEventListener('compositionend', () => {
         isComposition = false
-        inputEl.value = replaceSensWord(inputEl.value)
-        setTimeout(() => {
-          const evt = new Event('input')
-          inputEl.dispatchEvent(evt)
-        })
+        if (state.replaceSens) {
+          inputEl.value = replaceSensWord(inputEl.value)
+          setTimeout(() => {
+            const evt = new Event('input')
+            inputEl.dispatchEvent(evt)
+          })
+        }
       })
     }
 
