@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.25
+// @version      1.0.26
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -390,10 +390,12 @@
       if (!content) {
         return
       }
-      const safeContent = replaceSensWord(content)
+      if (state.replaceSens) {
+        content = replaceSensWord(content)
+      }
       // let evt = document.createEvent('HTMLEvents')
       // evt.initEvent('input', true, true)
-      refs.nativeChatInput.value = safeContent
+      refs.nativeChatInput.value = content
       let evt = new Event('input')
       refs.nativeChatInput.dispatchEvent(evt)
       document.querySelector('.live-skin-highlight-button-bg').click()
