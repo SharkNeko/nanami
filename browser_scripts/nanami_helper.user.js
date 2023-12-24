@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         七海直播间助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.26
+// @version      1.0.28
 // @description  自动晚安，自动打call，独轮车，规避屏蔽词
 // @author       pekomiko
 // @match        https://live.bilibili.com/*
@@ -512,6 +512,11 @@
       asoul: 'asouI',
       韭菜: '韭采',
       猴子: '猴仔',
+      头像: '头象',
+      骗: '偏',
+      演: '寅',
+      龟: '亀',
+      假: '徦',
     }
   }
 })()
