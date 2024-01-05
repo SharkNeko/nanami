@@ -1,0 +1,17 @@
+{
+  "name": "gpt",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eventemitter3": "^5.0.1",
+    "node-fetch": "^3.3.2",
+    "tunnel": "^0.0.6"
+  }
+}
