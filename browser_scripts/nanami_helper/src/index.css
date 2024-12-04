@@ -1,0 +1,10 @@
+#nnm-helper-panel {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+  
+#nnm-helper-panel button {
+  cursor: pointer;
+}
+  
