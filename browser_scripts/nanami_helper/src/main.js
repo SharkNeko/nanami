@@ -15,6 +15,7 @@ const check = setInterval(() => {
 }, 500)
 
 function main() {
+  loadDefaultSettings()
   createEntry()
   createPanel()
 }
@@ -33,6 +34,9 @@ function createPanel() {
   div.style.display = 'none'
   nativeChatPanel.appendChild(div)
   createApp(PluginPanel).mount(div)
+}
+
+function loadDefaultSettings() {
 }
 
 main()

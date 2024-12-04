@@ -1,5 +1,7 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
+import BaseButton from '../../components/BaseButton.vue'
+import { confirm } from '../../components/Confirm/index.js'
 
 const emit = defineEmits(['edit', 'delete', 'start', 'stop'])
 const props = defineProps({
@@ -9,8 +11,6 @@ const props = defineProps({
     default: false,
   },
 })
-
-const isConfirmDelete = ref(false)
 
 const toggleText = computed(() => {
   return props.running ? '暂停' : '启动'
@@ -25,28 +25,18 @@ function clickToggle() {
 }
 
 function clickDelete() {
-  isConfirmDelete.value = true
-}
-
-function clickConfirmDelete() {
-  emit('delete')
-}
-
-function clickCancelDelete() {
-  isConfirmDelete.value = false
+  confirm('确定删除').then(() => {
+    emit('delete')
+  })
 }
 </script>
 <template>
   <div class="nnm__unicycle-item">
-    <button class="nnm__unicycle-item-start" @click="clickToggle">{{ toggleText }}</button>
+    <BaseButton class="nnm__unicycle-item-start" @click="clickToggle">{{ toggleText }}</BaseButton>
     <div class="nnm__unicycle-item-name">{{ name }}</div>
-    <div class="nnm__unicycle-item-btn-right" v-if="!isConfirmDelete">
-      <button @click="clickEdit">编辑</button>
-      <button @click="clickDelete">删除</button>
-    </div>
-    <div class="nnm__unicycle-item-btn-right" v-else>
-      <button @click="clickConfirmDelete">确定删除</button>
-      <button @click="clickCancelDelete">取消</button>
+    <div class="nnm__unicycle-item-btn-right">
+      <BaseButton @click="clickEdit">编辑</BaseButton>
+      <BaseButton @click="clickDelete">删除</BaseButton>
     </div>
   </div>
 </template>
@@ -82,18 +72,6 @@ function clickCancelDelete() {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.nnm__unicycle-item button {
-  background: #e5e5e5;
-  border: none;
-  border-radius: 2px;
-  margin-left: 4px;
-  cursor: pointer;
-}
-
-.nnm__unicycle-item button:hover {
-  background: #c6c6c6;
 }
 
 .nnm__unicycle-item-btn-right {

@@ -1,3 +1,6 @@
 const KEY_PREFIX = 'nnmHelper_'
 export const UNICYCLE_RULE_KEY = KEY_PREFIX + 'unicycle_rules'
 export const UNICYCLE_INTERVAL_KEY = KEY_PREFIX + 'unicycle_interval'
+export const BLOCK_MAP_KEY = KEY_PREFIX + 'block_map'
+export const ACTIVE_BLOCK_MAP_KEY = KEY_PREFIX + 'active_block_map'
+export const ALREADY_INSTALL_KEY = KEY_PREFIX + 'already_install'

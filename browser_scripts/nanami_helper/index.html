@@ -5,9 +5,25 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vite App</title>
+    <style>
+      .bottom-actions {
+        width: 400px;
+        height: 50px;
+        border: 1px solid gray;
+        margin-top: 20px;
+      }
+
+      .chat-history-panel {
+        width: 400px;
+        height: 700px;
+        border: 1px solid gray;
+        position: relative;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div class="chat-history-panel"></div>
+    <div class="bottom-actins p-relative"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
